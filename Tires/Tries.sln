@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tires", "Tires\Tires.csproj", "{73E1A10C-6239-4F4C-8BE1-7B2A274102AB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tries", "Tries\Tries.csproj", "{73E1A10C-6239-4F4C-8BE1-7B2A274102AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tries.Tests", "Tires.Tests\Tries.Tests.csproj", "{B77D305F-82C5-4565-938C-17CD40593E0F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tries.Tests", "Tries.Tests\Tries.Tests.csproj", "{B77D305F-82C5-4565-938C-17CD40593E0F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

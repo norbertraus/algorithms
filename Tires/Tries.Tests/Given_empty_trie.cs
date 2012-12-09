@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace Tries.Tests
+namespace DataStructures.Tests
 {
     public class Given_empty_trie
     {
