@@ -1,1 +1,2 @@
-Personal playground for tackling algorithmic problems
+Personal playground for algorithmic problems
+* Trie structure
