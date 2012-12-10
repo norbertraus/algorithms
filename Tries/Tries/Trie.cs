@@ -10,9 +10,8 @@ namespace DataStructures
     {
         public const int AlphabetSize = 256;
 
-        private readonly Node _root = new Node(); //root node of the trie
-        private int _size = 0;
-
+        private Node _root = new Node(); //root node of the trie
+        
         class Node
         {
             private Node[] _links = new Node[AlphabetSize];
@@ -41,7 +40,21 @@ namespace DataStructures
         /// </summary>
         public int Size
         {
-            get { return _size; }
+            get { return GetSize(_root); }
+        }
+
+        private int GetSize(Node node)
+        {
+            if (node == null) return 0;
+            int size = 0;
+
+            if (!Equals(node.Value, default(T))) size++;
+            for (int next = 0; next < AlphabetSize; next++)
+            {
+                size += GetSize(node.Links[next]);
+            }
+
+            return size;
         }
 
         /// <summary>
@@ -60,6 +73,48 @@ namespace DataStructures
         public IEnumerable<string> KeysWithMatch(string pattern)
         {
             return Collect(_root, "", pattern);
+        }
+
+        public string LongestPrefixOf(string prefix)
+        {
+            var length = Search(_root, prefix);
+            return prefix.Substring(0, length);
+        }
+
+        public void Delete(string key)
+        {
+            _root = Delete(_root, key, 0);
+        }
+
+        private Node Delete(Node node, string key, int d)
+        {
+            if (node == null) return null;
+            if (d == key.Length) 
+                node.Value = default(T);
+            else
+            {
+                var @char = key[d];
+                node.Links[@char] = Delete(node.Links[@char], key, d + 1);
+            }
+
+            if (!Equals(node.Value, default(T))) return node;
+
+            for (int next = 0; next < AlphabetSize; next++)
+            {
+                if (node.Links[next] != null)
+                    return node;
+            }        
+            return null;
+        }
+
+        private int Search(Node node, string prefix, int current = 0, int length = 0)
+        {
+            if (node == null) return length;
+            if (!Equals(node.Value, default(T))) length = current;
+            if (current == prefix.Length) return length;
+
+            var @char = prefix[current];
+            return Search(node.Links[@char], prefix, current + 1, length);
         }
 
         private IEnumerable<string> Collect(Node root, string prefix)
@@ -104,7 +159,6 @@ namespace DataStructures
             if(key.Length == position)
             {
                 node.Value = value;
-                _size++;
                 return node;
             }
             var @char = key[position];

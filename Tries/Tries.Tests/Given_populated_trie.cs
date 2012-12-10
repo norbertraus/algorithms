@@ -40,5 +40,29 @@ namespace DataStructures.Tests
             Assert.That(keys.SingleOrDefault(x => x == "she"), Is.Not.Null);
             Assert.That(keys.SingleOrDefault(x => x == "the"), Is.Not.Null);
         }
+
+        [Test]
+        public void should_match_longest_prefix()
+        {
+            Assert.That(_trie.LongestPrefixOf("shell"), Is.EqualTo("she"));
+            Assert.That(_trie.LongestPrefixOf("shellsort"), Is.EqualTo("shells"));
+            Assert.That(_trie.LongestPrefixOf("shelters"), Is.EqualTo("she"));
+        }
+
+        [Test]
+        public void should_delete_specified_key()
+        {
+            _trie.Delete("shells");
+
+            Assert.That(_trie.Keys.Count(), Is.EqualTo(6));
+            Assert.That(_trie.Size, Is.EqualTo(6));
+            Assert.That(_trie.GetValue("shells"), Is.EqualTo(0));
+        }
+
+        [Test]
+        public void should_return_size_of_7_without_duplicates()
+        {
+            Assert.That(_trie.Size, Is.EqualTo(7));
+        }
     }
 }
