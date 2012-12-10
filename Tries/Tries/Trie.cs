@@ -12,7 +12,7 @@ namespace DataStructures
 
         private Node _root = new Node(); //root node of the trie
         
-        class Node
+       public class Node
         {
             private Node[] _links = new Node[AlphabetSize];
 
@@ -42,6 +42,8 @@ namespace DataStructures
         {
             get { return GetSize(_root); }
         }
+
+        public Node Root { get { return _root; } }
 
         private int GetSize(Node node)
         {
