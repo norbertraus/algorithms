@@ -7,10 +7,21 @@
       xmlns:isom="clr-namespace:GraphSharp.Algorithms.Layout.Simple.FDP;assembly=GraphSharp"
       xmlns:Sample="clr-namespace:Tries.UI"
       xmlns:tree="clr-namespace:GraphSharp.Algorithms.Layout.Simple.Tree;assembly=GraphSharp"
+      xmlns:model="clr-namespace:Tries.UI.Model"
+      xmlns:GraphSharp_Controls="clr-namespace:GraphSharp.Controls;assembly=GraphSharp.Controls"
+      xmlns:WPFExtensions_AttachedBehaviours="clr-namespace:WPFExtensions.AttachedBehaviours;assembly=WPFExtensions"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="600"
 	Title="TriePage">
 
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/PocGraphDataTemplates.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+    
     <DockPanel>
 
         <WrapPanel Orientation="Horizontal"
@@ -23,25 +34,9 @@
                             Value="5" />
                 </Style>
             </WrapPanel.Resources>
-            <Button Content="Generate new graph"
-                    Click="Button_Click" />
             <Button Content="Generate new trie"
                     Click="Generate_Trie" />
-            <Button Content="Add vertex"
-                    Click="AddVertex_Click" />
-            <Button Content="Remove vertex"
-                    Click="RemoveVertex_Click" />
-            <Button Content="Add edge"
-                    Click="AddEdge_Click" />
-            <Button Content="Remove edge"
-                    Click="RemoveEdge_Click" />
-            <Button Content="Relayout"
-                    Click="Button_Click_1" />
         </WrapPanel>
-
-        <ProgressBar Value="{Binding ElementName=layout,Path=LayoutStatusPercent,Mode=OneWay}" 
-                     Height="30"
-                     DockPanel.Dock="Bottom"/>
 
         <zoom:ZoomControl>
             <Sample:MyGraphLayout x:Name="layout"

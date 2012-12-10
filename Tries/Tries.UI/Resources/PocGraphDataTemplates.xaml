@@ -20,7 +20,7 @@
 	<SolidColorBrush x:Key="SemiHighlightedOutEdgeBrush" Color="#FFD6A51C" />
 	
 	<DataTemplate DataType="{x:Type model:Vertex}">
-		<TextBlock Text="{Binding Path=Id, Mode=OneWay, FallbackValue=VertexId}" />
+		<TextBlock Text="{Binding Path=Id, Mode=OneWay}" />
     </DataTemplate>
 	
 	
