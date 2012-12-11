@@ -63,6 +63,4 @@ namespace DataStructures.Tests
             Assert.That(_trie.GetValue("it"), Is.EqualTo(2));
         }
     }
-
-   
 }
