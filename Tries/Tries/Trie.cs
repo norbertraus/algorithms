@@ -11,8 +11,8 @@ namespace DataStructures
         public const int AlphabetSize = 256;
 
         private Node _root = new Node(); //root node of the trie
-        
-       public class Node
+
+        public class Node
         {
             private Node[] _links = new Node[AlphabetSize];
 
@@ -47,11 +47,11 @@ namespace DataStructures
 
         private int GetSize(Node node)
         {
-            if (node == null) return 0;
+            if(node == null) return 0;
             int size = 0;
 
-            if (!Equals(node.Value, default(T))) size++;
-            for (int next = 0; next < AlphabetSize; next++)
+            if(!Equals(node.Value, default(T))) size++;
+            for(int next = 0; next < AlphabetSize; next++)
             {
                 size += GetSize(node.Links[next]);
             }
@@ -90,8 +90,8 @@ namespace DataStructures
 
         private Node Delete(Node node, string key, int d)
         {
-            if (node == null) return null;
-            if (d == key.Length) 
+            if(node == null) return null;
+            if(d == key.Length)
                 node.Value = default(T);
             else
             {
@@ -99,21 +99,21 @@ namespace DataStructures
                 node.Links[@char] = Delete(node.Links[@char], key, d + 1);
             }
 
-            if (!Equals(node.Value, default(T))) return node;
+            if(!Equals(node.Value, default(T))) return node;
 
-            for (int next = 0; next < AlphabetSize; next++)
+            for(int next = 0; next < AlphabetSize; next++)
             {
-                if (node.Links[next] != null)
+                if(node.Links[next] != null)
                     return node;
-            }        
+            }
             return null;
         }
 
         private int Search(Node node, string prefix, int current = 0, int length = 0)
         {
-            if (node == null) return length;
-            if (!Equals(node.Value, default(T))) length = current;
-            if (current == prefix.Length) return length;
+            if(node == null) return length;
+            if(!Equals(node.Value, default(T))) length = current;
+            if(current == prefix.Length) return length;
 
             var @char = prefix[current];
             return Search(node.Links[@char], prefix, current + 1, length);
@@ -140,7 +140,7 @@ namespace DataStructures
             if(root == null) yield break;
             if(pattern.Length == prefix.Length && !Equals(root.Value, default(T)))
                 yield return prefix;
-            if (pattern.Length == prefix.Length) yield break;
+            if(pattern.Length == prefix.Length) yield break;
 
             var @char = pattern[prefix.Length];
             for(int next = 0; next < AlphabetSize; next++)
