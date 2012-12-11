@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TernaryTrie.cs" />
     <Compile Include="Trie.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
