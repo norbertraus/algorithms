@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Given_empty_ternary_trie.cs" />
     <Compile Include="Given_empty_trie.cs" />
     <Compile Include="Given_populated_trie.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
