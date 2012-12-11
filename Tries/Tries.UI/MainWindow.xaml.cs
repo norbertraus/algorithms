@@ -14,6 +14,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml;
 using DataStructures;
+using GraphSharp.Controls;
+using QuickGraph;
 using QuickGraph.Serialization;
 using Tries.UI.Model;
 using Tries.UI.ViewModels;
@@ -25,8 +27,6 @@ namespace Tries.UI
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Trie<int> _trie;
-
         public MainWindow()
         {
             InitializeComponent();
@@ -37,56 +37,44 @@ namespace Tries.UI
 
         public MainViewModel ViewModel { get; private set; }
 
-        //void LoadGraphFromTrie()
-        //{
-        //    _trie = new Trie<int>();
+        private void Generate_Trie(object sender, RoutedEventArgs e)
+        {
+            var graph = new BidirectionalGraph<Vertex, IEdge<Vertex>>();
 
-        //    var keys = "she sells sea shells by the sea shore".Split(' ');
-        //    for(int i = 0; i < keys.Length; i++)
-        //    {
-        //        _trie.Put(keys[i], i + 1);
-        //    }
+            var trie = new Trie<int>();
+            var keys = ViewModel.TrieText.Split(' ');
+            for(int i = 0; i < keys.Length; i++)
+            {
+                trie.Put(keys[i], i + 1);
+            }
 
-        //    //walk the trie and initialize the graph
-        //    //var graph = new Graph();
-        //    //var root = new Vertex("Root");
-        //    //graph.AddVertex(root);
+            //walk the trie and initialize the graph
+            var vertex = new Vertex("root");
+            graph.AddVertex(vertex);
+            _Add(graph, vertex, trie.Root);
 
-        //    //_Add(graph, root, _trie.Root);
+            //update view model
+            ViewModel.Graph = graph;
+        }
 
-        //    //set the graph
+        private void _Add(BidirectionalGraph<Vertex, IEdge<Vertex>> graph, Vertex root, Trie<int>.Node node)
+        {
+            for(int next = 0; next < 256; next++)
+            {
+                if(node.Links[next] != null)
+                {
+                    //add vertex
+                    var vertex = new Vertex(((char)next).ToString());
+                    graph.AddVertex(vertex);
 
-        //    var graph = new Graph();
+                    var edge = new Edge<Vertex>(root, vertex);
+                    graph.AddEdge(edge);
 
-        //    for(int i = 0; i < 8; i++)
-        //    {
-        //        var v = new Vertex(i.ToString());
-        //        graph.AddVertex(v);
-        //    }
-
-        //    graph.AddEdge(new Edge("0to1", graph.Vertices.ElementAt(0), graph.Vertices.ElementAt(1)));
-        //    graph.AddEdge(new Edge("1to2", graph.Vertices.ElementAt(1), graph.Vertices.ElementAt(2)));
-        //    graph.AddEdge(new Edge("2to3", graph.Vertices.ElementAt(2), graph.Vertices.ElementAt(3)));
-        //    graph.AddEdge(new Edge("2to4", graph.Vertices.ElementAt(2), graph.Vertices.ElementAt(4)));
-        //    graph.AddEdge(new Edge("0to5", graph.Vertices.ElementAt(0), graph.Vertices.ElementAt(5)));
-        //    graph.AddEdge(new Edge("1to7", graph.Vertices.ElementAt(1), graph.Vertices.ElementAt(7)));
-        //    graph.AddEdge(new Edge("4to6", graph.Vertices.ElementAt(4), graph.Vertices.ElementAt(6)));
-
-        //    ViewModel.Graph = graph;
-        //}
-
-        //private void _Add(Graph graph, Vertex root, Trie<int>.Node node)
-        //{
-        //    foreach (var link in _trie.Root.Links.Where(x => x.Value != 0))
-        //    {
-        //        var vertex = new Vertex(link.Value.ToString());
-        //        graph.AddVertex(vertex);
-
-        //        var edge = new Edge("", root, vertex);
-        //        graph.AddEdge(edge);
-
-        //        _Add(graph, vertex, link);
-        //    }
-        //}
+                    _Add(graph, vertex, node.Links[next]);
+                }
+            }
+        }
     }
+
+    public class MyGraphLayout : GraphLayout<Vertex, IEdge<Vertex>, IBidirectionalGraph<Vertex, IEdge<Vertex>>> { }
 }

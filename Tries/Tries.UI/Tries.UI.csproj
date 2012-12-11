@@ -80,10 +80,6 @@
     <Compile Include="Model\Graph.cs" />
     <Compile Include="Model\Vertex.cs" />
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="TriePage.xaml.cs">
-      <DependentUpon>TriePage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ViewModels\GraphLayoutViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -108,10 +104,6 @@
     <Page Include="Resources\PocGraphDataTemplates.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="TriePage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using QuickGraph;
 using Tries.UI.Annotations;
 using Tries.UI.Model;
 
@@ -9,67 +10,34 @@ namespace Tries.UI.ViewModels
 {
     public class MainViewModel : INotifyPropertyChanged
     {
-        private GraphModel selectedGraphModel;
-
-        public ObservableCollection<GraphModel> GraphModels { get; private set; }
-        public GraphModel SelectedGraphModel
-        {
-            get { return selectedGraphModel; }
-            set
-            {
-                if(selectedGraphModel != value)
-                {
-                    selectedGraphModel = value;
-                    SelectedGraphChanged();
-                    OnPropertyChanged("SelectedGraphModel");
-                }
-            }
-        }
-
-        private void SelectedGraphChanged()
-        {
-            if(AnalyzedLayouts != null)
-            {
-                AnalyzedLayouts.Graph = selectedGraphModel.Graph;
-            }
-        }
-
-        public GraphLayoutViewModel AnalyzedLayouts { get; private set; }
-
         public MainViewModel()
         {
-            AnalyzedLayouts = new GraphLayoutViewModel
-            {
-                LayoutAlgorithmType = "FR"
-            };
-            GraphModels = new ObservableCollection<GraphModel>();
-
-            CreateSampleGraphs();
+            TrieText = "she sells the shells close to the sea";
         }
 
-        void CreateSampleGraphs()
+        private BidirectionalGraph<Vertex, IEdge<Vertex>> _graph;
+        public BidirectionalGraph<Vertex, IEdge<Vertex>> Graph
         {
-            #region SimpleTree
-
-            var graph = new Graph();
-
-            for(int i = 0; i < 8; i++)
-            {
-                var v = new Vertex(i.ToString());
-                graph.AddVertex(v);
+            get { return _graph; }
+            set 
+            { 
+                _graph = value;
+                OnPropertyChanged();
             }
+        }
 
-            graph.AddEdge(new Edge("0to1", graph.Vertices.ElementAt(0), graph.Vertices.ElementAt(1)));
-            graph.AddEdge(new Edge("1to2", graph.Vertices.ElementAt(1), graph.Vertices.ElementAt(2)));
-            graph.AddEdge(new Edge("2to3", graph.Vertices.ElementAt(2), graph.Vertices.ElementAt(3)));
-            graph.AddEdge(new Edge("2to4", graph.Vertices.ElementAt(2), graph.Vertices.ElementAt(4)));
-            graph.AddEdge(new Edge("0to5", graph.Vertices.ElementAt(0), graph.Vertices.ElementAt(5)));
-            graph.AddEdge(new Edge("1to7", graph.Vertices.ElementAt(1), graph.Vertices.ElementAt(7)));
-            graph.AddEdge(new Edge("4to6", graph.Vertices.ElementAt(4), graph.Vertices.ElementAt(6)));
-
-            GraphModels.Add(new GraphModel("Fa", graph));
-
-            #endregion
+        private string _trieText;
+        public string TrieText
+        {
+            get { return _trieText; }
+            set 
+            { 
+                if (_trieText != value)
+                {
+                    _trieText = value;
+                    OnPropertyChanged();
+                }
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
