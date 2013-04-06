@@ -43,6 +43,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Queue.cs" />
+    <None Include="References\Set.cs" />
+    <None Include="References\SetStorage.cs" />
     <Compile Include="Stacks.cs" />
     <Compile Include="ExpressionEvaluator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
